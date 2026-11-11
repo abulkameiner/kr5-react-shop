@@ -25,6 +25,11 @@ npm run dev
 - useState для searchQuery, selectedCategory, sortType, ddedCount.
 - Функции ilterProductsByCategory, searchProducts, sortProducts, getPreparedProducts в src/utils/productUtils.js.
 - Список isibleProducts, пустое состояние, счётчик найденных товаров и счётчик добавленных в корзину.
+### Практическое занятие №21. useEffect и формы
+- Компонент FormField и страница OrderPage с управляемой формой (ormData, handleFieldChange).
+- Валидация alidateOrderForm в src/utils/formValidation.js, ошибки выводятся в интерфейсе (без lert).
+- useEffect: черновик формы сохраняется в localStorage и восстанавливается (JSON.stringify/JSON.parse, 	ry/catch), после успешной отправки черновик очищается.
+- Счётчик добавленных в корзину товаров сохраняется в localStorage.
 
 ## Структура
 
