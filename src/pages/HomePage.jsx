@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Box, Button, Container, Paper, Typography } from '@mui/material';
 import ProductList from '../components/ProductList.jsx';
 import products from '../data/products.js';
 
@@ -6,16 +7,26 @@ function HomePage() {
   const featuredProducts = products.filter((product) => product.isAvailable).slice(0, 3);
 
   return (
-    <main className="container">
-      <section className="hero">
-        <h2>Свежеобжаренный кофе каждый день</h2>
-        <p>Подберите зерно и аксессуары для домашней заварки в кофейне «СМЕНА».</p>
-        <Link to="/catalog" className="button">Перейти в каталог</Link>
-      </section>
+    <Container component="main" maxWidth="lg">
+      <Paper variant="outlined" sx={{ mt: 3, p: 4 }}>
+        <Typography variant="h4" component="h2" gutterBottom>
+          Свежеобжаренный кофе каждый день
+        </Typography>
+        <Typography sx={{ mb: 2 }}>
+          Подберите зерно и аксессуары для домашней заварки в кофейне «СМЕНА».
+        </Typography>
+        <Button variant="contained" component={Link} to="/catalog">
+          Перейти в каталог
+        </Button>
+      </Paper>
 
-      <h2 className="section-title">Популярное</h2>
-      <ProductList products={featuredProducts} onAddToCart={() => {}} />
-    </main>
+      <Typography variant="h5" component="h2" sx={{ my: 3 }}>
+        Популярное
+      </Typography>
+      <Box>
+        <ProductList products={featuredProducts} onAddToCart={() => {}} />
+      </Box>
+    </Container>
   );
 }
 

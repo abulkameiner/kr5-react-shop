@@ -1,4 +1,9 @@
 import { Link } from 'react-router-dom';
+import { Button, Card, CardActions, CardContent, CardMedia, Chip, Typography } from '@mui/material';
+
+function getButtonVariant(isAvailable) {
+  return isAvailable ? 'contained' : 'outlined';
+}
 
 function ProductCard({ product, onAddToCart }) {
   const { id, title, category, price, discountPercent, rating, isAvailable, image } = product;
@@ -7,31 +12,36 @@ function ProductCard({ product, onAddToCart }) {
   const categoryLabel = category === 'coffee' ? 'Кофе' : 'Аксессуары';
 
   return (
-    <article className="product-card">
-      <img className="product-card__image" src={image} alt={title} />
-      <div className="product-card__body">
-        <span className="product-card__category">{categoryLabel}</span>
-        <h3 className="product-card__title">`n          <Link to={`/catalog/${id}`}>{title}</Link>`n        </h3>
-        <p className="product-card__rating">Рейтинг: {rating}</p>
-        <p className="product-card__price">
-          {formattedPrice} ₽
-          {discountPercent > 0 && (
-            <span className="product-card__discount">−{discountPercent}%</span>
-          )}
-        </p>
-        <p className={isAvailable ? 'product-card__status' : 'product-card__status product-card__status--out'}>
+    <Card variant="outlined" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <CardMedia component="img" image={image} alt={title} sx={{ aspectRatio: '4 / 3', objectFit: 'cover' }} />
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Chip label={categoryLabel} size="small" sx={{ mb: 1 }} />
+        <Typography variant="h6" component="h3" gutterBottom>
+          <Link to={`/catalog/${id}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+            {title}
+          </Link>
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Рейтинг: {rating}
+        </Typography>
+        <Typography variant="h6" sx={{ mt: 1 }}>
+          {formattedPrice} ₽{' '}
+          {discountPercent > 0 && <Chip label={`−${discountPercent}%`} color="primary" size="small" />}
+        </Typography>
+        <Typography variant="body2" color={isAvailable ? 'success.main' : 'error.main'}>
           {isAvailable ? 'В наличии' : 'Нет в наличии'}
-        </p>
-        <button
-          type="button"
-          className="button"
+        </Typography>
+      </CardContent>
+      <CardActions sx={{ px: 2, pb: 2 }}>
+        <Button
+          variant={getButtonVariant(isAvailable)}
           disabled={!isAvailable}
           onClick={() => onAddToCart(product)}
         >
           {isAvailable ? 'В корзину' : 'Нет в наличии'}
-        </button>
-      </div>
-    </article>
+        </Button>
+      </CardActions>
+    </Card>
   );
 }
 

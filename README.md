@@ -39,6 +39,11 @@ npm run dev
 - Данные товаров вынесены в public/products.json.
 - API-слой src/api/productsApi.js: equestJson, getProducts, getProductById.
 - CatalogPage и ProductPage загружают данные через API, показывают состояния isLoading и error, кнопку повторной загрузки (eloadKey), отменяют запрос через AbortController (обработка AbortError), для отсутствующего товара выводится сообщение «Товар не найден».
+### Практическое занятие №24. Material UI
+- Установлены @mui/material, @emotion/react, @emotion/styled, @mui/icons-material.
+- Тема src/theme/muiTheme.js (основной цвет терракотовый #ab4026), ThemeProvider и CssBaseline в src/main.jsx.
+- На MUI переведены Header (AppBar, NavLink), ProductCard (Card, Chip, Typography, Button), ProductList (пустое состояние через Alert), CatalogControls (TextField, Select, FormControl), FormField и OrderPage (TextField с error и helperText), сообщения формы через Alert, загрузка через CircularProgress, ошибки через Alert.
+- Маршрутизация и API-слой продолжают работать.
 
 ## Структура
 
