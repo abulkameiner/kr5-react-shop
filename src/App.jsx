@@ -1,4 +1,5 @@
 import Header from './components/Header.jsx';
+import OrderPage from './pages/OrderPage.jsx';
 import CatalogPage from './pages/CatalogPage.jsx';
 import './App.css';
 
@@ -7,6 +8,7 @@ function App() {
     <div className="app">
       <Header title="СМЕНА" subtitle="Кофейня и магазин зерна" />
       <CatalogPage />
+      <OrderPage />
     </div>
   );
 }

@@ -1,14 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CatalogControls from '../components/CatalogControls.jsx';
 import ProductList from '../components/ProductList.jsx';
 import products from '../data/products.js';
 import { getPreparedProducts } from '../utils/productUtils.js';
 
+const ADDED_COUNT_STORAGE_KEY = 'kr5-react-shop-added-count';
+
+function loadAddedCount() {
+  try {
+    const savedCount = localStorage.getItem(ADDED_COUNT_STORAGE_KEY);
+    if (!savedCount) {
+      return 0;
+    }
+    return Number(JSON.parse(savedCount)) || 0;
+  } catch {
+    return 0;
+  }
+}
+
 function CatalogPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortType, setSortType] = useState('default');
-  const [addedCount, setAddedCount] = useState(0);
+  const [addedCount, setAddedCount] = useState(loadAddedCount);
 
   const visibleProducts = getPreparedProducts(
     products,
@@ -16,6 +30,14 @@ function CatalogPage() {
     selectedCategory,
     sortType
   );
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(ADDED_COUNT_STORAGE_KEY, JSON.stringify(addedCount));
+    } catch {
+      // localStorage недоступен
+    }
+  }, [addedCount]);
 
   function handleAddToCart() {
     setAddedCount((prevCount) => prevCount + 1);
