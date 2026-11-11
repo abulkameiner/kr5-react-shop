@@ -13,7 +13,7 @@ function HomePage() {
           Свежеобжаренный кофе каждый день
         </Typography>
         <Typography sx={{ mb: 2 }}>
-          Подберите зерно и аксессуары для домашней заварки в кофейне «СМЕНА».
+          Подберите зерно и аксессуары для домашней заварки в кофейне «2much».
         </Typography>
         <Button variant="contained" component={Link} to="/catalog">
           Перейти в каталог
