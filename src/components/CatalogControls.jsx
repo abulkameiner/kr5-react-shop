@@ -1,3 +1,5 @@
+import { FormControl, InputLabel, MenuItem, Paper, Select, TextField } from '@mui/material';
+
 function CatalogControls({
   searchQuery,
   selectedCategory,
@@ -7,46 +9,46 @@ function CatalogControls({
   onSortChange
 }) {
   return (
-    <section className="catalog-controls">
-      <div className="catalog-controls__field">
-        <label htmlFor="catalog-search">Поиск по названию</label>
-        <input
-          id="catalog-search"
-          type="search"
-          value={searchQuery}
-          placeholder="Например, Бразилия"
-          onChange={(event) => onSearchChange(event.target.value)}
-        />
-      </div>
+    <Paper variant="outlined" sx={{ p: 2, display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+      <TextField
+        label="Поиск по названию"
+        type="search"
+        value={searchQuery}
+        placeholder="Например, Бразилия"
+        onChange={(event) => onSearchChange(event.target.value)}
+        sx={{ flex: '1 1 220px' }}
+      />
 
-      <div className="catalog-controls__field">
-        <label htmlFor="catalog-category">Категория</label>
-        <select
-          id="catalog-category"
+      <FormControl sx={{ flex: '1 1 200px' }}>
+        <InputLabel id="catalog-category-label">Категория</InputLabel>
+        <Select
+          labelId="catalog-category-label"
+          label="Категория"
           value={selectedCategory}
           onChange={(event) => onCategoryChange(event.target.value)}
         >
-          <option value="all">Все товары</option>
-          <option value="coffee">Кофе</option>
-          <option value="accessories">Аксессуары</option>
-        </select>
-      </div>
+          <MenuItem value="all">Все товары</MenuItem>
+          <MenuItem value="coffee">Кофе</MenuItem>
+          <MenuItem value="accessories">Аксессуары</MenuItem>
+        </Select>
+      </FormControl>
 
-      <div className="catalog-controls__field">
-        <label htmlFor="catalog-sort">Сортировка</label>
-        <select
-          id="catalog-sort"
+      <FormControl sx={{ flex: '1 1 200px' }}>
+        <InputLabel id="catalog-sort-label">Сортировка</InputLabel>
+        <Select
+          labelId="catalog-sort-label"
+          label="Сортировка"
           value={sortType}
           onChange={(event) => onSortChange(event.target.value)}
         >
-          <option value="default">По умолчанию</option>
-          <option value="price-asc">Сначала дешёвые</option>
-          <option value="price-desc">Сначала дорогие</option>
-          <option value="rating-desc">По рейтингу</option>
-          <option value="title">По названию</option>
-        </select>
-      </div>
-    </section>
+          <MenuItem value="default">По умолчанию</MenuItem>
+          <MenuItem value="price-asc">Сначала дешёвые</MenuItem>
+          <MenuItem value="price-desc">Сначала дорогие</MenuItem>
+          <MenuItem value="rating-desc">По рейтингу</MenuItem>
+          <MenuItem value="title">По названию</MenuItem>
+        </Select>
+      </FormControl>
+    </Paper>
   );
 }
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { Alert, Box, Button, Chip, CircularProgress, Container, Paper, Typography } from '@mui/material';
 import { getProductById } from '../api/productsApi.js';
 import { getFinalPrice } from '../utils/productUtils.js';
 
@@ -46,60 +47,68 @@ function ProductPage({ onAddToCart }) {
 
   if (isLoading) {
     return (
-      <main className="container">
-        <p className="status-message">Загрузка товара...</p>
-      </main>
+      <Container component="main" maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
+        <CircularProgress />
+      </Container>
     );
   }
 
   if (error) {
     return (
-      <main className="container">
-        <div className="status-message status-message--error" role="alert">
-          <p>{error}</p>
-          <button type="button" className="button" onClick={handleRetry}>Повторить</button>
-        </div>
-        <Link to="/catalog" className="back-link">← Назад в каталог</Link>
-      </main>
+      <Container component="main" maxWidth="lg" sx={{ py: 3 }}>
+        <Alert
+          severity="error"
+          sx={{ mb: 2 }}
+          action={<Button color="inherit" size="small" onClick={handleRetry}>Повторить</Button>}
+        >
+          {error}
+        </Alert>
+        <Button component={Link} to="/catalog">← Назад в каталог</Button>
+      </Container>
     );
   }
 
   if (!product) {
     return (
-      <main className="container">
-        <h2 className="section-title">Товар не найден</h2>
-        <p className="empty-state">Товара с номером «{productId}» нет в каталоге.</p>
-        <Link to="/catalog" className="button">Вернуться в каталог</Link>
-      </main>
+      <Container component="main" maxWidth="lg" sx={{ py: 3 }}>
+        <Typography variant="h4" component="h2" gutterBottom>
+          Товар не найден
+        </Typography>
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          Товара с номером «{productId}» нет в каталоге.
+        </Alert>
+        <Button variant="contained" component={Link} to="/catalog">Вернуться в каталог</Button>
+      </Container>
     );
   }
 
   const categoryLabel = product.category === 'coffee' ? 'Кофе' : 'Аксессуары';
 
   return (
-    <main className="container">
-      <Link to="/catalog" className="back-link">← Назад в каталог</Link>
-      <article className="product-details">
-        <img className="product-details__image" src={product.image.replace('-small', '')} alt={product.title} />
-        <div className="product-details__info">
-          <span className="product-card__category">{categoryLabel}</span>
-          <h2>{product.title}</h2>
-          <p>Рейтинг: {product.rating}</p>
-          <p className="product-card__price">
-            {getFinalPrice(product).toLocaleString('ru-RU')} ₽
-            {product.discountPercent > 0 && (
-              <span className="product-card__discount">−{product.discountPercent}%</span>
-            )}
-          </p>
-          <p className={product.isAvailable ? 'product-card__status' : 'product-card__status product-card__status--out'}>
+    <Container component="main" maxWidth="lg" sx={{ py: 3 }}>
+      <Button component={Link} to="/catalog" sx={{ mb: 2 }}>← Назад в каталог</Button>
+      <Paper
+        variant="outlined"
+        sx={{ p: 2, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 3 }}
+      >
+        <Box component="img" src={product.image.replace('-small', '')} alt={product.title} sx={{ width: '100%', borderRadius: 2 }} />
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start' }}>
+          <Chip label={categoryLabel} size="small" />
+          <Typography variant="h4" component="h2">{product.title}</Typography>
+          <Typography>Рейтинг: {product.rating}</Typography>
+          <Typography variant="h5">
+            {getFinalPrice(product).toLocaleString('ru-RU')} ₽{' '}
+            {product.discountPercent > 0 && <Chip label={`−${product.discountPercent}%`} color="primary" size="small" />}
+          </Typography>
+          <Typography color={product.isAvailable ? 'success.main' : 'error.main'}>
             {product.isAvailable ? 'В наличии' : 'Нет в наличии'}
-          </p>
-          <button type="button" className="button" disabled={!product.isAvailable} onClick={() => onAddToCart(product)}>
+          </Typography>
+          <Button variant="contained" disabled={!product.isAvailable} onClick={() => onAddToCart(product)}>
             {product.isAvailable ? 'В корзину' : 'Нет в наличии'}
-          </button>
-        </div>
-      </article>
-    </main>
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
   );
 }
 

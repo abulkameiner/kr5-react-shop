@@ -1,16 +1,24 @@
+import { Alert, Box } from '@mui/material';
 import ProductCard from './ProductCard.jsx';
 
 function ProductList({ products, onAddToCart }) {
   if (products.length === 0) {
-    return <p className="empty-state">По вашему запросу ничего не найдено.</p>;
+    return <Alert severity="info">По вашему запросу ничего не найдено.</Alert>;
   }
 
   return (
-    <div className="product-list">
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))',
+        gap: 2,
+        pb: 4
+      }}
+    >
       {products.map((product) => (
         <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
       ))}
-    </div>
+    </Box>
   );
 }
 

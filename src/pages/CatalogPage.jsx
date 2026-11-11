@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Alert, Box, Button, CircularProgress, Container, Typography } from '@mui/material';
 import CatalogControls from '../components/CatalogControls.jsx';
 import ProductList from '../components/ProductList.jsx';
 import { getProducts } from '../api/productsApi.js';
@@ -53,8 +54,10 @@ function CatalogPage({ addedCount, onAddToCart }) {
   );
 
   return (
-    <main className="container">
-      <h2 className="section-title">Каталог товаров</h2>
+    <Container component="main" maxWidth="lg" sx={{ py: 3 }}>
+      <Typography variant="h4" component="h2" gutterBottom>
+        Каталог товаров
+      </Typography>
 
       <CatalogControls
         searchQuery={searchQuery}
@@ -65,24 +68,31 @@ function CatalogPage({ addedCount, onAddToCart }) {
         onSortChange={setSortType}
       />
 
-      {isLoading && <p className="status-message">Загрузка товаров...</p>}
+      {isLoading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+          <CircularProgress />
+        </Box>
+      )}
 
       {error && (
-        <div className="status-message status-message--error" role="alert">
-          <p>{error}</p>
-          <button type="button" className="button" onClick={handleRetry}>Повторить</button>
-        </div>
+        <Alert
+          severity="error"
+          sx={{ my: 2 }}
+          action={<Button color="inherit" size="small" onClick={handleRetry}>Повторить</Button>}
+        >
+          {error}
+        </Alert>
       )}
 
       {!isLoading && !error && (
         <>
-          <p className="catalog-summary">
+          <Typography color="text.secondary" sx={{ my: 2 }}>
             Найдено товаров: {visibleProducts.length} · Добавлено в корзину: {addedCount}
-          </p>
+          </Typography>
           <ProductList products={visibleProducts} onAddToCart={onAddToCart} />
         </>
       )}
-    </main>
+    </Container>
   );
 }
 
