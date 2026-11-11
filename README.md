@@ -35,6 +35,10 @@ npm run dev
 - Маршруты: / - HomePage, /catalog - CatalogPage, /catalog/:productId - ProductPage (useParams, Number(), обработка отсутствующего товара), /order - OrderPage, /cart - CartPage, * - NotFoundPage.
 - Header использует NavLink с активным стилем (getLinkClassName), карточки товаров ссылаются на страницу товара.
 - Состояние корзины (cartItems) поднято в App и сохраняется в localStorage.
+### Практическое занятие №23. Работа с API
+- Данные товаров вынесены в public/products.json.
+- API-слой src/api/productsApi.js: equestJson, getProducts, getProductById.
+- CatalogPage и ProductPage загружают данные через API, показывают состояния isLoading и error, кнопку повторной загрузки (eloadKey), отменяют запрос через AbortController (обработка AbortError), для отсутствующего товара выводится сообщение «Товар не найден».
 
 ## Структура
 
