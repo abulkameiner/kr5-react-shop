@@ -42,7 +42,7 @@ function App() {
 
   return (
     <div className="app">
-      <Header title="СМЕНА" subtitle="Кофейня и магазин зерна" cartCount={cartItems.length} />
+      <Header title="2much" subtitle="Кофейня и магазин зерна" cartCount={cartItems.length} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/catalog" element={<CatalogPage addedCount={cartItems.length} onAddToCart={handleAddToCart} />} />
