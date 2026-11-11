@@ -30,6 +30,11 @@ npm run dev
 - Валидация alidateOrderForm в src/utils/formValidation.js, ошибки выводятся в интерфейсе (без lert).
 - useEffect: черновик формы сохраняется в localStorage и восстанавливается (JSON.stringify/JSON.parse, 	ry/catch), после успешной отправки черновик очищается.
 - Счётчик добавленных в корзину товаров сохраняется в localStorage.
+### Практическое занятие №22. React Router
+- Установлен eact-router-dom, BrowserRouter подключён в src/main.jsx, маршруты описаны в src/App.jsx.
+- Маршруты: / - HomePage, /catalog - CatalogPage, /catalog/:productId - ProductPage (useParams, Number(), обработка отсутствующего товара), /order - OrderPage, /cart - CartPage, * - NotFoundPage.
+- Header использует NavLink с активным стилем (getLinkClassName), карточки товаров ссылаются на страницу товара.
+- Состояние корзины (cartItems) поднято в App и сохраняется в localStorage.
 
 ## Структура
 
