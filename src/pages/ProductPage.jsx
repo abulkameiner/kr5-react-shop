@@ -1,11 +1,68 @@
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import products from '../data/products.js';
+import { getProductById } from '../api/productsApi.js';
 import { getFinalPrice } from '../utils/productUtils.js';
 
 function ProductPage({ onAddToCart }) {
   const { productId } = useParams();
   const numericProductId = Number(productId);
-  const product = products.find((item) => item.id === numericProductId);
+
+  const [product, setProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [reloadKey, setReloadKey] = useState(0);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadProduct() {
+      setIsLoading(true);
+      setError('');
+      setProduct(null);
+
+      try {
+        const loadedProduct = await getProductById(numericProductId, { signal: controller.signal });
+        setProduct(loadedProduct);
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          return;
+        }
+        setError(err.message || 'Не удалось загрузить товар.');
+      } finally {
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadProduct();
+
+    return () => controller.abort();
+  }, [numericProductId, reloadKey]);
+
+  function handleRetry() {
+    setReloadKey((prevKey) => prevKey + 1);
+  }
+
+  if (isLoading) {
+    return (
+      <main className="container">
+        <p className="status-message">Загрузка товара...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="container">
+        <div className="status-message status-message--error" role="alert">
+          <p>{error}</p>
+          <button type="button" className="button" onClick={handleRetry}>Повторить</button>
+        </div>
+        <Link to="/catalog" className="back-link">← Назад в каталог</Link>
+      </main>
+    );
+  }
 
   if (!product) {
     return (
