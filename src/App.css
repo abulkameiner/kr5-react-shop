@@ -21,3 +21,12 @@
 .product-card__discount { margin-left: 8px; color: var(--color-primary); font-size: 14px; }
 .product-card__status { color: var(--color-ok); font-size: 14px; }
 .product-card__status--out { color: var(--color-error); }
+.catalog-controls { display: flex; flex-wrap: wrap; gap: 16px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 16px; }
+.catalog-controls__field { display: flex; flex-direction: column; gap: 4px; flex: 1 1 200px; }
+.catalog-controls input, .catalog-controls select { padding: 8px 10px; border: 1px solid var(--color-border); border-radius: 8px; font: inherit; }
+.catalog-summary { color: var(--color-muted); margin: 16px 0; }
+.empty-state { padding: 24px; text-align: center; background: var(--color-surface); border: 1px dashed var(--color-border); border-radius: 12px; }
+
+.button { margin-top: auto; padding: 8px 14px; border: none; border-radius: 8px; background: var(--color-primary); color: #fff; font: inherit; cursor: pointer; text-align: center; text-decoration: none; display: inline-block; }
+.button:hover:not(:disabled) { background: var(--color-primary-dark); }
+.button:disabled { background: #c9bbb4; cursor: not-allowed; }

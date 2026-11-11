@@ -1,4 +1,4 @@
-function ProductCard({ product }) {
+function ProductCard({ product, onAddToCart }) {
   const { title, category, price, discountPercent, rating, isAvailable, image } = product;
   const finalPrice = Math.round(price * (1 - discountPercent / 100));
   const formattedPrice = finalPrice.toLocaleString('ru-RU');
@@ -20,6 +20,14 @@ function ProductCard({ product }) {
         <p className={isAvailable ? 'product-card__status' : 'product-card__status product-card__status--out'}>
           {isAvailable ? 'В наличии' : 'Нет в наличии'}
         </p>
+        <button
+          type="button"
+          className="button"
+          disabled={!isAvailable}
+          onClick={() => onAddToCart(product)}
+        >
+          {isAvailable ? 'В корзину' : 'Нет в наличии'}
+        </button>
       </div>
     </article>
   );
